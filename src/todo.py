@@ -5,6 +5,11 @@ from pathlib import Path
 
 TASKS_FILE = Path("todo.json") 
 
+def print_todo_banner():
+    print("  ┏━━━━┓")
+    print("  ┃TODO┃")
+    print("  ┗━━━━┛")
+
 def load_tasks():
     if TASKS_FILE.exists():
         return json.loads(TASKS_FILE.read_text())
@@ -14,12 +19,14 @@ def save_tasks(tasks):
     TASKS_FILE.write_text(json.dumps(tasks, indent=2))
 
 def add_task(text):
+    print_todo_banner()
     tasks = load_tasks()
     tasks.append({"text": text, "done": False})
     save_tasks(tasks)
     print(f"Added: {text}")
 
 def list_tasks():
+    print_todo_banner()
     tasks = load_tasks()
     if not tasks:
         print("No tasks.")
@@ -29,6 +36,7 @@ def list_tasks():
         print(f"{i}: [{status}] {task['text']}")
 
 def mark_done(index):
+    print_todo_banner()
     tasks = load_tasks()
     if 0 <= index < len(tasks):
         tasks[index]["done"] = True
@@ -38,6 +46,7 @@ def mark_done(index):
         print(f"Invalid task index: {index}")
 
 def remove_task(index):
+    print_todo_banner()
     tasks = load_tasks()
     if 0 <= index < len(tasks):
         removed = tasks.pop(index)
@@ -47,6 +56,7 @@ def remove_task(index):
         print(f"Invalid task index: {index}")
 
 def edit_task(index, new_text):
+    print_todo_banner()
     tasks = load_tasks()
     if 0 <= index < len(tasks):
         old_text = tasks[index]["text"]
@@ -57,6 +67,7 @@ def edit_task(index, new_text):
         print(f"Invalid task index: {index}")
 
 def duplicate_task(index):
+    print_todo_banner()
     tasks = load_tasks()
     if 0 <= index < len(tasks):
         original = tasks[index]
@@ -68,10 +79,12 @@ def duplicate_task(index):
         print(f"Invalid task index: {index}")
 
 def export_tasks():
+    print_todo_banner()
     tasks = load_tasks()
     print(json.dumps(tasks, indent=2))
 
 def export_csv():
+    print_todo_banner()
     tasks = load_tasks()
     output = csv.StringIO()
     writer = csv.writer(output)
