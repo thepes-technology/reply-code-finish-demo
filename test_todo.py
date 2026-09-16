@@ -1,9 +1,7 @@
-"""Test suite for todo list."""
 from pathlib import Path
 from todo import TASKS_FILE, add_task, list_tasks, mark_done, remove_task, load_tasks
 
 def demo():
-    """Run self-check: add, list, mark done, and remove tasks."""
     if TASKS_FILE.exists():
         TASKS_FILE.unlink()
 
