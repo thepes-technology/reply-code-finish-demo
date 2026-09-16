@@ -2,31 +2,53 @@
 
 A minimal CLI todo list that stores tasks in JSON.
 
+## Project Structure
+
+```
+├── src/
+│   └── todo.py          # Main CLI implementation
+├── tests/
+│   └── test_todo.py     # Test suite
+└── README.md
+```
+
 ## Usage
 
 Add a task:
 ```bash
-python todo.py add "buy milk"
+python src/todo.py add "buy milk"
 ```
 
 List all tasks:
 ```bash
-python todo.py list
+python src/todo.py list
 ```
 
 Mark a task as done (by index):
 ```bash
-python todo.py done 0
+python src/todo.py done 0
 ```
 
-Run self-check:
+Edit a task (by index):
 ```bash
-python todo.py test
+python src/todo.py edit 0 "buy organic milk"
 ```
 
-## How it works
+Duplicate a task (by index):
+```bash
+python src/todo.py duplicate 0
+```
 
-- Tasks are stored in `todo.json` in the current directory
-- Each task has `text` and `done` status
-- Commands are processed via `sys.argv` with no external dependencies
+Remove a task (by index):
+```bash
+python src/todo.py remove 0
+```
 
+Export all tasks as JSON:
+```bash
+python src/todo.py export
+```
+
+Run tests:
+```bash
+python -m pytest tests/test_todo.py
