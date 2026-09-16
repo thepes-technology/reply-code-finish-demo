@@ -66,9 +66,13 @@ def duplicate_task(index):
     else:
         print(f"Invalid task index: {index}")
 
+def export_tasks():
+    tasks = load_tasks()
+    print(json.dumps(tasks, indent=2))
+
 if __name__ == "__main__":
     if len(sys.argv) < 2:
-        print("Usage: python todo.py [add|list|done|remove|edit|duplicate|test]")
+        print("Usage: python todo.py [add|list|done|remove|edit|duplicate|export|test]")
         sys.exit(1)
 
     cmd = sys.argv[1]
@@ -85,6 +89,8 @@ if __name__ == "__main__":
         edit_task(int(sys.argv[2]), " ".join(sys.argv[3:]))
     elif cmd == "duplicate" and len(sys.argv) > 2:
         duplicate_task(int(sys.argv[2]))
+    elif cmd == "export":
+        export_tasks()
     elif cmd == "test":
         from test_todo import demo
         demo()
