@@ -1,3 +1,4 @@
+"""Test suite for todo list."""
 import csv
 import io
 import json
@@ -8,14 +9,17 @@ sys.path.insert(0, str(Path(__file__).parent.parent / "src"))
 from todo import TASKS_FILE, add_task, list_tasks, mark_done, remove_task, edit_task, duplicate_task, export_tasks, export_csv, load_tasks
 
 def setup_function():
+    """Clean up before each test."""
     if TASKS_FILE.exists():
         TASKS_FILE.unlink()
 
 def teardown_function():
+    """Clean up after each test."""
     if TASKS_FILE.exists():
         TASKS_FILE.unlink()
 
 def test_add_and_list_tasks():
+    """Test adding and listing tasks."""
     add_task("test task 1")
     add_task("test task 2")
     add_task("test task 3")
@@ -27,6 +31,7 @@ def test_add_and_list_tasks():
     assert tasks[2]["text"] == "test task 3"
 
 def test_mark_done():
+    """Test marking a task as done."""
     add_task("test task 1")
     add_task("test task 2")
 
@@ -36,6 +41,7 @@ def test_mark_done():
     assert tasks[1]["done"] == False
 
 def test_remove_task():
+    """Test removing a task."""
     add_task("test task 1")
     add_task("test task 2")
     add_task("test task 3")
@@ -47,6 +53,7 @@ def test_remove_task():
     assert tasks[1]["text"] == "test task 3"
 
 def test_edit_task():
+    """Test editing a task."""
     add_task("test task 1")
     edit_task(0, "edited task 1")
 
@@ -54,6 +61,7 @@ def test_edit_task():
     assert tasks[0]["text"] == "edited task 1"
 
 def test_duplicate_task():
+    """Test duplicating a task."""
     add_task("test task 1")
     duplicate_task(0)
 
@@ -63,6 +71,7 @@ def test_duplicate_task():
     assert tasks[1]["text"] == "test task 1"
 
 def test_export_tasks_json():
+    """Test exporting tasks as JSON."""
     add_task("test task 1")
     mark_done(0)
 
@@ -72,6 +81,7 @@ def test_export_tasks_json():
     assert '"done": true' in exported_json
 
 def test_export_tasks_csv():
+    """Test exporting tasks as CSV."""
     add_task("test task 1")
     add_task("test task 2")
     mark_done(0)
@@ -90,6 +100,7 @@ def test_export_tasks_csv():
     assert "test task 2,Pendente" in csv_content
 
 def test_full_workflow():
+    """Test complete workflow: add, mark done, remove, edit, duplicate, and export."""
     add_task("test task 1")
     add_task("test task 2")
     add_task("test task 3")
