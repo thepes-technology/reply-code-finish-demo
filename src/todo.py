@@ -31,9 +31,14 @@ def list_tasks():
     if not tasks:
         print("No tasks.")
         return
+    print("┌───┬────────┬─────────────────────────┐")
+    print("│ 
+    print("├───┼────────┼─────────────────────────┤")
     for i, task in enumerate(tasks):
         status = "✓" if task["done"] else " "
-        print(f"{i}: [{status}] {task['text']}")
+        text = task["text"][:23].ljust(23)
+        print(f"│ {i} │   {status}    │ {text} │")
+    print("└───┴────────┴─────────────────────────┘")
 
 def mark_done(index):
     print_todo_banner()
