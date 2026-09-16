@@ -1,3 +1,4 @@
+import csv
 import json
 import sys
 from pathlib import Path
@@ -70,9 +71,19 @@ def export_tasks():
     tasks = load_tasks()
     print(json.dumps(tasks, indent=2))
 
+def export_csv():
+    tasks = load_tasks()
+    output = csv.StringIO()
+    writer = csv.writer(output)
+    writer.writerow(["Texto", "Status"])
+    for task in tasks:
+        status = "Concluído" if task["done"] else "Pendente"
+        writer.writerow([task["text"], status])
+    print(output.getvalue(), end="")
+
 if __name__ == "__main__":
     if len(sys.argv) < 2:
-        print("Usage: python todo.py [add|list|done|remove|edit|duplicate|export|test]")
+        print("Usage: python todo.py [add|list|done|remove|edit|duplicate|export|export-csv|test]")
         sys.exit(1)
 
     cmd = sys.argv[1]
@@ -91,6 +102,8 @@ if __name__ == "__main__":
         duplicate_task(int(sys.argv[2]))
     elif cmd == "export":
         export_tasks()
+    elif cmd == "export-csv":
+        export_csv()
     elif cmd == "test":
         from test_todo import demo
         demo()
